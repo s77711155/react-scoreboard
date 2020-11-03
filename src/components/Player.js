@@ -1,13 +1,21 @@
 import React from "react";
-import {Counter} from "./components/Counter";
-export const Player  = (props) =>{
-    return (
-        <div className='player'>
-        <span className='player-name'>
-            <button className='remove-player' onClick={() =>props.removePlayer(props.id)}>x</button>
-            {props.name}
-        </span>
-            <Counter/>
-        </div>
-    )
+import Counter from "./Counter";
+import {removePlayer} from "../redux/actions";
+import {useDispatch} from "react-redux";
+
+const Player = (props) => {
+  const dispatch = useDispatch();
+  return (
+    <div className="player">
+      <span className="player-name">
+        <button className="remove-player" onClick={() => dispatch(removePlayer(props.id))}>x</button>
+        {props.children}
+        {props.name}
+      </span>
+      <Counter id={props.id} score={props.score}></Counter>
+    </div>
+  );
 }
+
+// HoC, 커링 펑션
+export default Player;
